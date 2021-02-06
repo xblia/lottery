@@ -50,7 +50,7 @@
 <div id="main" class="wall">
     <div class="result-title">获奖名单</div>
     <div class="result-list" v-for="result in results">
-        <div v-for="item in result">
+        <div v-for="(item, index) in result" :key="index">
             {{item}}
         </div>
     </div>
@@ -77,6 +77,7 @@
             for(let nameList of str_results) {
                 let temp = JSON.parse(nameList)
                 temp = temp.map(item => {return item.replace('<br/>', ' ')})
+                //temp = temp.map(item => require('avatar/' + item + '.png'))
                 results.push(temp)
             }
             

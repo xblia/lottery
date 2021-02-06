@@ -172,7 +172,8 @@
             return [0.1 * Math.random() + 0.01, -(0.1 * Math.random() + 0.01)];
         };
         var getKey = function(item){
-            return item.name + '-' + item.phone;
+            //return item.name + '-' + item.phone;
+            return item.name;
         };
         var createHTML = function(){
             var html = [ '<ul>' ];
@@ -180,7 +181,7 @@
                 item.index = index;
                 var key = getKey(item);
                 var color = choosed[key] ? 'yellow' : 'white';
-                html.push('<li><a href="#" style="color: ' + color + ';">' + item.name + '</a></li>');
+                html.push('<li><a href="#" style="color: ' + color + ';"><img src="avatar/' + item.name +'.png" width="80" height="80" />' + item.name + '</a></li>');
             });
             html.push('</ul>');
             return html.join('');
@@ -205,7 +206,8 @@
                 .map(function(m){
                   choosed[getKey(m)] = 1;
                   list[m.index].style.color = color;
-                  return m.name + '<br/>' + m.phone; 
+                  //return m.name + '<br/>' + m.phone; 
+                  return m.name
                 });
             localStorage.setItem('choosed', JSON.stringify(choosed));
             return ret;
@@ -253,7 +255,12 @@
                             $('#result').css('display', 'block').html('<span>已抽完</span>');
                             return
                         }
-                        $('#result').css('display', 'block').html('<span>' + ret.join('</span><span>') + '</span>');
+                        single_result_info = ""
+                        ret.forEach(function(ele){
+                            single_result_info += '<span><img src="avatar/' + ele + '.png" width="80" height="80" /><br/>' + ele + '</span>'
+                        });
+                        //$('#result').css('display', 'block').html('<span>' + ret.join('</span><span>') + '</span>');
+                        $('#result').css('display', 'block').html(single_result_info);
                         TagCanvas.Reload('myCanvas');
                         setTimeout(function(){
                             localStorage.setItem(new Date().toString(), JSON.stringify(ret));
